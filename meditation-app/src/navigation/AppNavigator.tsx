@@ -10,6 +10,8 @@ import IndexScreen from '../screens/IndexScreen'; // Meditation Home
 import ExploreScreen from '../screens/ExploreScreen';
 import LibraryScreen from '../screens/LibraryScreen';
 import MoreScreen from '../screens/MoreScreen';
+import DetailScreen from '../screens/DetailScreen';
+import CourseDetailScreen from '../screens/CourseDetailScreen'; // Meditation Details Screen
 
 // Stack and Tab Navigator
 const Stack = createNativeStackNavigator();
@@ -22,17 +24,17 @@ const TabNavigator = () => {
       screenOptions={({ route }) => ({
         tabBarStyle: {
           position: 'absolute',
-          backgroundColor: '#FFFFFF', // Semi-transparent footer
-          height: 70, // Increased height for better spacing
-          paddingBottom: 10, // Space for labels
+          backgroundColor: '#FFFFFF',
+          height: 70,
+          paddingBottom: 10,
         },
         tabBarItemStyle: {
-          marginVertical: 5, // Align icons and labels
+          marginVertical: 5,
         },
-        tabBarActiveTintColor: '#000000', // Golden active color
-        tabBarInactiveTintColor: '#A0A0A0', // White inactive color
+        tabBarActiveTintColor: '#000000',
+        tabBarInactiveTintColor: '#A0A0A0',
         tabBarLabelStyle: {
-          fontSize: 12, // Label font size
+          fontSize: 12,
           fontWeight: 'bold',
         },
         tabBarIcon: ({ color, size, focused }) => {
@@ -42,10 +44,9 @@ const TabNavigator = () => {
           else if (route.name === 'Library') iconName = 'library-books';
           else if (route.name === 'More') iconName = 'more-horiz';
 
-          // Return the icon with custom size and color
           return <Icon name={iconName} size={focused ? 28 : 24} color={color} />;
         },
-        headerShown: false, // Hide header for all tabs
+        headerShown: false,
       })}
     >
       <Tab.Screen name="Home" component={IndexScreen} />
@@ -56,22 +57,41 @@ const TabNavigator = () => {
   );
 };
 
-
 // Main Navigator
 const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
+        {/* Login Screen */}
         <Stack.Screen
           name="Login"
           component={LoginScreen}
-          options={{ headerShown: false }} // No footer on Login screen
+          options={{ headerShown: false }}
         />
+
+        {/* Tab Navigator */}
         <Stack.Screen
           name="Main"
           component={TabNavigator}
-          options={{ headerShown: false }} // Footer for all TabNavigator screens
+          options={{ headerShown: false }}
         />
+
+        {/* Detail Screen */}
+        <Stack.Screen
+          name="Detail"
+          component={DetailScreen}
+          options={{
+            headerShown: true, // Show header for detail screen
+            title: 'Meditation Details', // Title for the detail screen
+          }}
+        />
+
+        <Stack.Screen
+          name="CourseDetail"
+          component={CourseDetailScreen}
+          options={{ title: 'Course Details' }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
